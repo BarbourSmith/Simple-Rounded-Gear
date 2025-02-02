@@ -6,5 +6,7 @@
 
 
 
- 
+ A basic round tooth gear
+
+
 
