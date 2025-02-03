@@ -103,8 +103,8 @@
         {
             "atomType": "Code",
             "name": "Code",
-            "x": 0.5158730158730159,
-            "y": 0.2785515320334262,
+            "x": 0.5218253968253969,
+            "y": 0.2618384401114206,
             "uniqueID": 1738611723994,
             "ioValues": [
                 {
@@ -122,39 +122,25 @@
             ],
             "description": "Defines a Replicad code block.",
             "codeVersion": 1,
-            "code": " \n      //Inputs:[teeth, step, height]\n      //This defines the molecules inputs and creates variables with the same names which can be referenced in the code\n      \n      let angle = 360/(teeth*2); //The angle of each tooth is 1/2 of what would fit to make space for the teeth that come in\n      let radius = (step / 2) / Math.sin(angle / 2 * (Math.PI / 180)); //This is where the teeth circles are positioned\n      let apothem = (step / 2) / Math.tan(angle / 2 * (Math.PI / 180)); //This is the size of the circle that the teeth are subtracted from\n\n      console.log(\"The effective size of the gear is: \");\n      console.log(apothem);\n      console.log(\"The diameter of each tooth is: \");\n      console.log(step/2);\n      \n      //We can also create a new shape from scratch\n      let oneTooth = replicad.drawCircle(step/2)\n      //This is the plane we are going to put our new shape on\n      const newPlane = new Plane();\n      //And we extrude the shape to make it 3D\n      let createdShape = oneTooth.translate([radius, 0]);\n\n      let fusedShape = createdShape.clone();\n\n      for (let i = 1; i < teeth; i++) {\n        fusedShape = fusedShape.fuse(createdShape.clone().rotate(2*angle*i, [0, 0, 0], [0, 0, 1]))\n      } \n\n      let center = replicad.drawCircle(apothem)\n      //This is the plane we are going to put our new shape on\n      //const newPlane2 = new Plane();\n      //And we extrude the shape to make it 3D\n      //let createdShape2 = center.sketchOnPlane(newPlane2).extrude(height);\n      //center = center.cut(fusedShape.clone().rotate(angle+1, [0, 0, 0], [0, 0, 1]));\n\n      let fullGear = fusedShape.clone().fuse(center);\n\n      fullGear = fullGear.cut(createdShape);\n\n      //Cut away the tooth in spots\n      for (let i = 0; i < teeth; i++) {\n        fullGear = fullGear.cut(createdShape.clone().rotate(2*angle*i + angle, [0, 0, 0], [0, 0, 1]))\n      } \n\n\n      //fullGear = fullGear.cut(fusedShape.rotate(angle, [0, 0, 0], [0, 0, 1]))\n      \n      //For our new geometry we need to define the tags, color, plane, etc\n      let shape2 = {\n          geometry: [fullGear], \n          tags: [\"aTag\"],\n          color: '#A3CE5B',\n          plane: newPlane,\n          bom: []\n      }\n      \n      return shape2\n      \n      \n          /**\n          To Use the Code Atom, enter your inputs to the input list a.e Inputs:[shape, height]\n          If your input is connected to another atom with a replicad geometry you can access its geometry by looking up its ID in your library. a.e library[Input1].geometry[0] \n          Use any replicad available methods to modify your geometry. Learn more about all of the available methods at \n          https://replicad.xyz/docs/introapp/UserGuide.html \n          Return a replicad object that includes geometry, color, tags and plane. \n      \n      \n          Example Code Atom:\n      \n            Inputs:[shape, x];\n      \n            let finalShape = library[shape].geometry[0].clone.translate[x,0,0]\n      \n            return {geometry: finalShape, color: library[shape].color, plane: library[shape].plane, tags: library[shape].tags }\n      \n            - See more examples at _______ \n      \n      \n          */\n      "
+            "code": " \n      //Inputs:[teeth, step, height]\n      //This defines the molecules inputs and creates variables with the same names which can be referenced in the code\n      \n      let angle = 360/(teeth*2); //The angle of each tooth is 1/2 of what would fit to make space for the teeth that come in\n      let radius = (step / 2) / Math.sin(angle / 2 * (Math.PI / 180)); //This is where the teeth circles are positioned\n      let apothem = (step / 2) / Math.tan(angle / 2 * (Math.PI / 180)); //This is the size of the circle that the teeth are subtracted from\n\n      console.log(\"The effective size of the gear is: \");\n      console.log(apothem);\n      console.log(\"The diameter of each tooth is: \");\n      console.log(step/2);\n      \n      //We can also create a new shape from scratch\n      let oneTooth = replicad.drawCircle(step/2)\n      //This is the plane we are going to put our new shape on\n      const newPlane = new Plane();\n      //And we extrude the shape to make it 3D\n      let createdShape = oneTooth.translate([radius, 0]);\n\n      let fusedShape = createdShape.clone();\n\n      for (let i = 1; i < teeth; i++) {\n        fusedShape = fusedShape.fuse(createdShape.clone().rotate(2*angle*i, [0, 0, 0], [0, 0, 1]))\n      } \n\n      let center = replicad.drawCircle(apothem)\n      //This is the plane we are going to put our new shape on\n      //const newPlane2 = new Plane();\n      //And we extrude the shape to make it 3D\n      //let createdShape2 = center.sketchOnPlane(newPlane2).extrude(height);\n      //center = center.cut(fusedShape.clone().rotate(angle+1, [0, 0, 0], [0, 0, 1]));\n\n      let fullGear = fusedShape.clone().fuse(center);\n\n      //Cut away the tooth in spots\n      for (let i = 0; i < teeth; i++) {\n        fullGear = fullGear.cut(createdShape.clone().rotate(2*angle*i + angle + .1, [0, 0, 0], [0, 0, 1])) //The 0.1 here is to account for a bug when the edges allign perfectly\n      } \n\n\n      //fullGear = fullGear.cut(fusedShape.rotate(angle, [0, 0, 0], [0, 0, 1]))\n      \n      //For our new geometry we need to define the tags, color, plane, etc\n      let shape2 = {\n          geometry: [fullGear], \n          tags: [\"aTag\"],\n          color: '#A3CE5B',\n          plane: newPlane,\n          bom: []\n      }\n      \n      return shape2\n      \n      \n          /**\n          To Use the Code Atom, enter your inputs to the input list a.e Inputs:[shape, height]\n          If your input is connected to another atom with a replicad geometry you can access its geometry by looking up its ID in your library. a.e library[Input1].geometry[0] \n          Use any replicad available methods to modify your geometry. Learn more about all of the available methods at \n          https://replicad.xyz/docs/introapp/UserGuide.html \n          Return a replicad object that includes geometry, color, tags and plane. \n      \n      \n          Example Code Atom:\n      \n            Inputs:[shape, x];\n      \n            let finalShape = library[shape].geometry[0].clone.translate[x,0,0]\n      \n            return {geometry: finalShape, color: library[shape].color, plane: library[shape].plane, tags: library[shape].tags }\n      \n            - See more examples at _______ \n      \n      \n          */\n      "
         },
         {
-            "atomType": "Circle",
-            "name": "Circle",
-            "x": 0.5165343915343915,
-            "y": 0.9080779944289693,
-            "uniqueID": 1738614379390,
+            "atomType": "Extrude",
+            "name": "Extrude",
+            "x": 0.6931216931216931,
+            "y": 0.20612813370473537,
+            "uniqueID": 1738615508207,
             "ioValues": [
                 {
-                    "name": "diameter",
+                    "name": "geometry",
+                    "ioValue": 1738611723994
+                },
+                {
+                    "name": "height",
                     "ioValue": 10
                 }
             ],
-            "description": "Creates a new circle."
-        },
-        {
-            "atomType": "Difference",
-            "name": "Difference",
-            "x": 0.6785714285714286,
-            "y": 0.6350974930362118,
-            "uniqueID": 1738614382700,
-            "ioValues": [
-                {
-                    "name": "geometry2",
-                    "ioValue": 1738614379390
-                },
-                {
-                    "name": "geometry1",
-                    "ioValue": 1738611723994
-                }
-            ],
-            "description": "Subtracts shape two from shape one."
+            "description": "Extrudes a 2D shape. Input can be negitive. "
         }
     ],
     "allConnectors": [
@@ -188,17 +174,10 @@
         },
         {
             "ap1Name": "geometry",
-            "ap2Name": "geometry1",
-            "ap2Primary": false,
+            "ap2Name": "geometry",
+            "ap2Primary": true,
             "ap1ID": 1738611723994,
-            "ap2ID": 1738614382700
-        },
-        {
-            "ap1Name": "geometry",
-            "ap2Name": "geometry2",
-            "ap2Primary": false,
-            "ap1ID": 1738614379390,
-            "ap2ID": 1738614382700
+            "ap2ID": 1738615508207
         }
     ],
     "unitsKey": "MM",
