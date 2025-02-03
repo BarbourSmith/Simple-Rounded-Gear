@@ -43,16 +43,16 @@
             "uniqueID": 1738533678952,
             "ioValues": [
                 {
-                    "name": "height",
+                    "name": "teeth",
                     "ioValue": 10
                 },
                 {
-                    "name": "teeth",
-                    "ioValue": 20
+                    "name": "step",
+                    "ioValue": 10
                 },
                 {
-                    "name": "step",
-                    "ioValue": 2
+                    "name": "height",
+                    "ioValue": 10
                 }
             ],
             "description": "Defines a Replicad code block.",
